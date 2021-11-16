@@ -20,7 +20,7 @@ const Home: NextPage<any> = ({ chosenText }) => {
       </main>
 
       <footer className={styles.footer}>
-        <div style={{alignSelf: 'center'}}>Repository https://github.com/weikangchia/myrepo</div>
+        <div style={{alignSelf: 'center'}}><span>Repository <a href="https://github.com/weikangchia/myrepo">https://github.com/weikangchia/myrepo</a></span></div>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
