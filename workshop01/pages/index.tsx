@@ -14,25 +14,39 @@ const Home: NextPage<any> = ({ chosenText }) => {
 
       <main className={styles.main}>
         <Image src="/font.png" width={72} height={72} />
-        <p className={styles.description}>
-          {chosenText}
-        </p>
+        <p className={styles.description}>{chosenText}</p>
       </main>
 
       <footer className={styles.footer}>
-        <div style={{alignSelf: 'center'}}><span>Repository <a href="https://github.com/weikangchia/myrepo">https://github.com/weikangchia/myrepo</a></span></div>
+        <div style={{ alignSelf: "center" }}>
+          <span>
+            Repository{" "}
+            <a href="https://github.com/weikangchia/myrepo">
+              https://github.com/weikangchia/myrepo
+            </a>
+          </span>
+        </div>
         <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
-          style={{alignSelf: 'center', marginTop: '24px'}}
+          style={{ alignSelf: "center", marginTop: "24px" }}
         >
           Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
-        <div style={{alignSelf: 'center', marginTop: '24px'}}>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+        <div style={{ alignSelf: "center", marginTop: "24px" }}>
+          Icons made by{" "}
+          <a href="https://www.freepik.com" title="Freepik">
+            Freepik
+          </a>{" "}
+          from{" "}
+          <a href="https://www.flaticon.com/" title="Flaticon">
+            www.flaticon.com
+          </a>
+        </div>
       </footer>
     </div>
   );
@@ -44,14 +58,14 @@ export async function getServerSideProps() {
     "There are 10 kinds of people. Those who know binary and those who don't.",
     "There are two ways of constructing a software design. One way is to make it so simple that there are obviously no deficiencies and the other is to make it so complicated that there are no obvious deficiencies.",
     "It's not that I'm so smart, it's just that I stay with problems longer.",
-    "It is pitch dark. You are likely to be eaten by a grue."
+    "It is pitch dark. You are likely to be eaten by a grue.",
   ];
 
   const chosenText = texts[~~(Math.random() * texts.length)];
 
   return {
     props: {
-      chosenText
+      chosenText,
     },
   };
 }
