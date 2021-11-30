@@ -6,7 +6,7 @@ metadata:
   labels:
     name: bggapp-svc
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     name: bggapp-pod
     app: bggapp
@@ -14,4 +14,4 @@ spec:
   ports:
     - protocol: TCP
       targetPort: 3000
-      port: 8080
+      port: 80
