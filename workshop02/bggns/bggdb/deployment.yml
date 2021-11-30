@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bggdb-deployment
+  labels:
+    name: bggdb-deployment
+    app: bggdb
+    tier: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: bggdb-pod
+      app: bggdb
+      tier: database
+  template:
+    metadata:
+      name: bggdb-pod
+      labels:
+        name: bggdb-pod
+        app: bggdb
+        tier: database
+    spec:
+      containers:
+      - name: bggdb-container
+        image: stackupiss/bgg-database:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306

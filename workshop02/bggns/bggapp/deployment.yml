@@ -1,0 +1,53 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bggapp-deployment
+  labels:
+    name: bggapp-deployment
+    app: bggapp
+    tier: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: bggapp-pod
+      app: bggapp
+      tier: backend
+  template:
+    metadata:
+      name: bggapp-pod
+      labels:
+        name: bggapp-pod
+        app: bggapp
+        tier: backend
+    spec:
+      containers:
+      - name: bggapp-container
+        image: stackupiss/bgg-backend:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: app-port
+          containerPort: 3000
+        env:
+        - name: BGG_DB_USER
+          value: root
+        - name: BGG_DB_HOST
+          value: bggdb-svc.bggns.svc.cluster.local
+        envFrom:
+        - secretRef:
+            name: bggdb-secret
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: app-port
+          timeoutSeconds: 5
+          failureThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: app-port
+          timeoutSeconds: 5
+          failureThreshold: 3
+          successThreshold: 1
+        
