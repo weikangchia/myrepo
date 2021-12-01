@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: default-backend-deploy
+  name: default-backend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: default-backend-pod
+  template:
+    metadata:
+      labels:
+        app: default-backend-pod
+    spec:
+      containers:
+      - image: stackupiss/default-backend:v2
+        name: default-backend-pod
+        ports:
+        - containerPort: 3000
