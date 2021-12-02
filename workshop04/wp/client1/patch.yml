@@ -1,0 +1,3 @@
+- op: replace
+  path: /spec/rules/0/host
+  value: wp-c1-144.126.241.155.nip.io

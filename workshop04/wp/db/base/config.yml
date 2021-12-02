@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: wpdb-secret
+  labels:
+    name: wpdb-secret
+type: Opaque
+data:
+  MYSQL_PASSWORD: Y2hhbmdlaXQ=
+  MYSQL_RANDOM_ROOT_PASSWORD: Y2hhbmdlaXQ=

@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wpdb-deployment
+  labels:
+    name: wpdb-deployment
+    app: wpdb
+    tier: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: wpdb-pod
+      app: wpdb
+      tier: database
+  template:
+    metadata:
+      name: wpdb-pod
+      labels:
+        name: wpdb-pod
+        app: wpdb
+        tier: database
+    spec:
+      volumes:
+        - name: wpdb-vol
+          persistentVolumeClaim:
+            claimName: wpdb-pvc
+      containers:
+      - name: wpdb-container
+        image: mysql:5.7
+        imagePullPolicy: IfNotPresent
+        args:
+        - "--ignore-db-dir=lost+found"
+        env:
+        - name: MYSQL_DATABASE
+          value: exampledb
+        - name: MYSQL_USER
+          value: exampleuser
+        envFrom:
+        - secretRef:
+            name: wpdb-secret
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: wpdb-vol
+          mountPath: /var/lib/mysql

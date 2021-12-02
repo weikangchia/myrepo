@@ -1,0 +1,47 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wpapp-deployment
+  labels:
+    name: wpapp-deployment
+    app: wpapp
+    tier: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: wpapp-pod
+      app: wpapp
+      tier: app
+  template:
+    metadata:
+      name: wpapp-pod
+      labels:
+        name: wpapp-pod
+        app: wpapp
+        tier: app
+    spec:
+      volumes:
+      - name: wpapp-vol
+        persistentVolumeClaim:
+          claimName: wpapp-pvc
+      containers:
+      - name: wpapp-container
+        image: wordpress:php8.0-apache
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: WORDPRESS_DB_HOST
+          value: wpdb-svc
+        - name: WORDPRESS_DB_USER
+          value: exampleuser
+        - name: WORDPRESS_DB_NAME
+          value: exampledb
+        envFrom:
+        - secretRef:
+            name: wpapp-secret
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: wpapp-vol
+          mountPath: /var/www/html
