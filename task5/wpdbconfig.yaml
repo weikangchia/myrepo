@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Secret
+metadata:
+   name: wpdb-secret
+type: Opaque
+data:
+   ROOT_PASSWORD: Y2hhbmdlaXQ=
+
+---
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlCluster
+metadata:
+   name: wpdb-mysql
+spec:
+   replicas: 1
+   secretName: wpdb-secret
+   mysqlVersion: "5.7"
+
+---
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlDatabase
+metadata:
+   name: wpdb
+spec:
+   database: wpdb
+   clusterRef:
+      name: wpdb-mysql
+      namespace: task5

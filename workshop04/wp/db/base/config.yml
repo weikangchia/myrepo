@@ -6,5 +6,7 @@ metadata:
     name: wpdb-secret
 type: Opaque
 data:
-  MYSQL_PASSWORD: Y2hhbmdlaXQ=
-  MYSQL_RANDOM_ROOT_PASSWORD: Y2hhbmdlaXQ=
+  ROOT_PASSWORD: Y2hhbmdlaXQ=
+  DATABASE: d3BkYg==
+  USER: d3BkYg==
+  PASSWORD: Y2hhbmdlaXQ=

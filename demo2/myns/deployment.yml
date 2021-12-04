@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dov-deployment
+  labels:
+    name: dov-deployment
+    app: dov
+    tier: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      name: dov-pod
+      app: dov
+      tier: backend
+  template:
+    metadata:
+      name: dov-pod
+      labels:
+        name: dov-pod
+        app: dov
+        tier: backend
+    spec:
+      # if need to pull secret
+      # imagePullSecrets:
+      # - docker-secret
+      containers:
+      - name: dov-container
+        image: stackupiss/dov-bear:v2
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000
+        # env:
+        # - name: INSTANCE_NAME
+        #   value: dov-bear
+        # - name: INSTANCE_HASH
+        #   valueFrom:
+        #     fieldRef:
+        #       fieldPath: status.podIP
+        envFrom:
+        # - configMapRef:
+        #     name: dov-cm
+        - secretRef:
+            name: dov-secret

@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Secret
 metadata:
@@ -7,3 +8,16 @@ metadata:
 type: Opaque
 data:
   WORDPRESS_DB_PASSWORD: Y2hhbmdlaXQ=
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wpapp-cm
+  labels:
+    name: wpapp-cm
+data:
+  WORDPRESS_DB_HOST: wpdb-cluster-mysql-master
+  WORDPRESS_DB_USER: wpdb
+  WORDPRESS_DB_NAME: wpdb

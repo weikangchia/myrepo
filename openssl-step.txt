@@ -1,0 +1,6 @@
+# generate the csr
+
+
+
+# examine secret
+openssl req -x509 -in dov.csr -text -noout -key dov.key

@@ -4,6 +4,8 @@ metadata:
   name: wpapp-ing
   labels:
     name: wpapp-ing
+  annotations:
+    nginx.ingress.kubernetes.io/limit-connections: "5"
 spec:
   ingressClassName: nginx
   rules:

@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dov-pod
+  labels:
+    name: dov-pod
+    app: dov
+    tier: backend
+spec:
+  containers:
+  - name: dov-container
+    image: stackupiss/dov-bear:v2
+    imagePullPolicy: IfNotPresent
+    ports:
+    - containerPort: 3000
+    env:
+    - name: INSTANCE_NAME
+      value: dov-bear
+    - name: INSTANCE_HASH
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP

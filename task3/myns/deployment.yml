@@ -1,0 +1,37 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bggdb-deployment
+  labels:
+    name: bggdb-deployment
+    app: bggdb
+    tier: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: bggdb-pod
+      app: bggdb
+      tier: database
+  template:
+    metadata:
+      name: bggdb-pod
+      labels:
+        name: bggdb-pod
+        app: bggdb
+        tier: database
+    spec:
+      volumes:
+        - name: bggdb-vol
+          persistentVolumeClaim:
+            claimName: nwdb-pvc
+      containers:
+      - name: bggdb-container
+        image: stackupiss/bgg-database:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: bggdb-vol
+          mountPath: /var/lib/mysql

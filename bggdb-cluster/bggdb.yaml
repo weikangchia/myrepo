@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: nwdb-secret
+  labels:
+    name: nwdb-secret
+type: Opaque
+data:
+  ROOT_PASSWORD: Y2hhbmdlaXQ=
+
+---
+
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlCluster
+metadata:
+  name: nwdb-mysql
+  labels:
+    name: nwdb-mysql
+spec:
+  replicas: 1
+  secretName: nwdb-secret
+  image: stackupiss/northwind-db:v1
+  volumeSpec:
+    persistentVolumeClaim:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: do-block-storage
+      resources:
+        requests:
+          storage: 1Gi

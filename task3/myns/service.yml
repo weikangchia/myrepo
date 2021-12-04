@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wpdb-svc
+  name: bggdb-svc
   labels:
-    name: wpdb-svc
+    name: bggdb-svc
 spec:
   type: ClusterIP
   selector:
-    name: wpdb-pod
-    app: wpdb
+    name: bggdb-pod
+    app: bggdb
     tier: database
   ports:
     - protocol: TCP

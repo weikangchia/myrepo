@@ -30,16 +30,11 @@ spec:
       - name: wpapp-container
         image: wordpress:php8.0-apache
         imagePullPolicy: IfNotPresent
-        env:
-        - name: WORDPRESS_DB_HOST
-          value: wpdb-svc
-        - name: WORDPRESS_DB_USER
-          value: exampleuser
-        - name: WORDPRESS_DB_NAME
-          value: exampledb
         envFrom:
         - secretRef:
             name: wpapp-secret
+        - configMapRef:
+            name: wpapp-cm
         ports:
         - containerPort: 80
         volumeMounts:

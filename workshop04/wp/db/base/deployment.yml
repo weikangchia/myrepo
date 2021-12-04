@@ -1,47 +1,33 @@
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlCluster
 metadata:
-  name: wpdb-deployment
+  name: wpdb-cluster
   labels:
-    name: wpdb-deployment
+    name: wpdb-cluster
     app: wpdb
     tier: database
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      name: wpdb-pod
-      app: wpdb
-      tier: database
-  template:
-    metadata:
-      name: wpdb-pod
-      labels:
-        name: wpdb-pod
-        app: wpdb
-        tier: database
-    spec:
-      volumes:
-        - name: wpdb-vol
-          persistentVolumeClaim:
-            claimName: wpdb-pvc
-      containers:
-      - name: wpdb-container
-        image: mysql:5.7
-        imagePullPolicy: IfNotPresent
-        args:
-        - "--ignore-db-dir=lost+found"
-        env:
-        - name: MYSQL_DATABASE
-          value: exampledb
-        - name: MYSQL_USER
-          value: exampleuser
-        envFrom:
-        - secretRef:
-            name: wpdb-secret
-        ports:
-        - containerPort: 3306
-        volumeMounts:
-        - name: wpdb-vol
-          mountPath: /var/lib/mysql
+  secretName: wpdb-secret
+  volumeSpec:
+    persistentVolumeClaim:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: do-block-storage
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: mysql.presslabs.org/v1alpha1
+kind: MysqlDatabase
+metadata:
+  name: wpdb-database
+  labels:
+    name: wpdb-database
+    app: wpdb
+    tier: database
+spec:
+  database: wpdb-database
+  clusterRef:
+    name: wpdb-cluster
